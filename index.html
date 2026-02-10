@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dev Builders | Sukhdev Singh</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #0a0a0a;
+  --white: #f5f0eb;
+  --cream: #e8e0d6;
+  --gold: #c8a55c;
+  --gold-dim: #a8884a;
+  --charcoal: #1a1a1a;
+  --mid: #2a2a2a;
+  --text-secondary: #8a8580;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: var(--gold) var(--black);
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--black);
+  color: var(--white);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.cursor-dot {
+  width: 8px; height: 8px;
+  background: var(--gold);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.1s;
+  mix-blend-mode: difference;
+}
+
+.cursor-ring {
+  width: 40px; height: 40px;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9998;
+  transition: transform 0.15s ease-out, width 0.3s, height 0.3s, border-color 0.3s;
+  transform: translate(-50%, -50%);
+}
+
+.cursor-ring.hover { width: 60px; height: 60px; border-color: var(--white); }
+
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 28px 48px; display: flex; justify-content: space-between; align-items: center;
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition: background 0.4s, border-color 0.4s, padding 0.4s;
+}
+nav.scrolled {
+  background: var(--charcoal);
+  border-bottom: 1px solid rgba(200,165,92,0.1);
+  padding: 18px 48px;
+}
+
+.logo {
+  font-family: 'Instrument Serif', serif; font-size: 24px;
+  letter-spacing: 0.02em; color: var(--white); text-decoration: none;
+}
+.logo span { color: var(--gold); }
+
+.nav-links { display: flex; gap: 36px; list-style: none; }
+.nav-links a {
+  color: var(--white); text-decoration: none; font-size: 13px; font-weight: 400;
+  letter-spacing: 0.15em; text-transform: uppercase; position: relative; padding-bottom: 2px;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: 0; left: 0;
+  width: 0; height: 1px; background: var(--gold);
+  transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.nav-links a:hover::after { width: 100%; }
+
+/* ── HERO ── */
+.hero {
+  height: 100vh; display: flex; align-items: flex-end;
+  padding: 0 48px 80px; position: relative; overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(180deg, rgba(10,10,10,0.05) 0%, rgba(10,10,10,0.65) 60%, rgba(10,10,10,0.97) 100%),
+    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><rect fill="%230a0a0a" width="1200" height="800"/><line x1="80" y1="800" x2="80" y2="180" stroke="%23c8a55c" opacity="0.07" stroke-width="1.5"/><line x1="140" y1="800" x2="140" y2="200" stroke="%23c8a55c" opacity="0.06" stroke-width="1.5"/><line x1="200" y1="800" x2="200" y2="220" stroke="%23c8a55c" opacity="0.07" stroke-width="1.5"/><line x1="260" y1="800" x2="260" y2="195" stroke="%23c8a55c" opacity="0.05" stroke-width="1.5"/><line x1="320" y1="800" x2="320" y2="210" stroke="%23c8a55c" opacity="0.06" stroke-width="1.5"/><line x1="380" y1="800" x2="380" y2="190" stroke="%23c8a55c" opacity="0.07" stroke-width="1.5"/><line x1="440" y1="800" x2="440" y2="225" stroke="%23c8a55c" opacity="0.05" stroke-width="1.5"/><line x1="80" y1="180" x2="440" y2="180" stroke="%23c8a55c" opacity="0.06" stroke-width="1"/><line x1="80" y1="350" x2="440" y2="350" stroke="%23c8a55c" opacity="0.05" stroke-width="1"/><line x1="80" y1="520" x2="440" y2="520" stroke="%23c8a55c" opacity="0.04" stroke-width="1"/><line x1="725" y1="40" x2="600" y2="120" stroke="%23c8a55c" opacity="0.08" stroke-width="1.5"/><line x1="725" y1="40" x2="850" y2="120" stroke="%23c8a55c" opacity="0.08" stroke-width="1.5"/><line x1="600" y1="120" x2="850" y2="120" stroke="%23c8a55c" opacity="0.06" stroke-width="1"/><line x1="725" y1="40" x2="725" y2="120" stroke="%23c8a55c" opacity="0.05" stroke-width="1"/><line x1="600" y1="120" x2="600" y2="400" stroke="%23c8a55c" opacity="0.06" stroke-width="1.5"/><line x1="850" y1="120" x2="850" y2="400" stroke="%23c8a55c" opacity="0.06" stroke-width="1.5"/><rect x="640" y="180" width="80" height="100" fill="none" stroke="%23c8a55c" opacity="0.06" stroke-width="1"/><rect x="780" y="180" width="40" height="100" fill="none" stroke="%23c8a55c" opacity="0.05" stroke-width="1"/><line x1="600" y1="400" x2="850" y2="400" stroke="%23c8a55c" opacity="0.05" stroke-width="1"/><rect x="695" y="320" width="50" height="80" fill="none" stroke="%23c8a55c" opacity="0.06" stroke-width="1"/><circle cx="725" cy="40" r="3" fill="%23c8a55c" opacity="0.12"/><line x1="950" y1="800" x2="950" y2="300" stroke="%23c8a55c" opacity="0.04" stroke-width="1"/><line x1="1010" y1="800" x2="1010" y2="320" stroke="%23c8a55c" opacity="0.04" stroke-width="1"/><line x1="1070" y1="800" x2="1070" y2="310" stroke="%23c8a55c" opacity="0.04" stroke-width="1"/><line x1="1130" y1="800" x2="1130" y2="330" stroke="%23c8a55c" opacity="0.04" stroke-width="1"/><line x1="920" y1="300" x2="1160" y2="300" stroke="%23c8a55c" opacity="0.04" stroke-width="1"/><line x1="920" y1="500" x2="1160" y2="500" stroke="%23c8a55c" opacity="0.03" stroke-width="1"/></svg>');
+  background-size: cover; background-position: center;
+}
+
+.hero-grain {
+  position: absolute; inset: 0; opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat; pointer-events: none;
+}
+
+.hero-line {
+  position: absolute; top: 0; bottom: 0; width: 1px;
+  background: linear-gradient(180deg, transparent, var(--gold-dim), transparent); opacity: 0.12;
+}
+.hero-line:nth-child(1) { left: 25%; }
+.hero-line:nth-child(2) { left: 50%; }
+.hero-line:nth-child(3) { left: 75%; }
+
+.hero-content { position: relative; z-index: 2; max-width: 780px; }
+
+.hero h1 {
+  font-family: 'Instrument Serif', serif; font-size: clamp(40px, 5.5vw, 72px);
+  line-height: 1.15; font-weight: 400; margin-bottom: 28px;
+  opacity: 0; animation: fadeUp 1s 0.6s forwards;
+}
+.hero h1 em { font-style: italic; color: var(--gold); }
+
+.hero-sub {
+  font-size: 16px; font-weight: 300; color: var(--cream);
+  line-height: 1.7; max-width: 540px;
+  opacity: 0; animation: fadeUp 1s 0.9s forwards;
+}
+
+.scroll-indicator {
+  position: absolute; bottom: 40px; right: 48px;
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+  opacity: 0; animation: fadeUp 1s 1.2s forwards;
+}
+.scroll-indicator span {
+  font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
+  writing-mode: vertical-rl; color: var(--text-secondary);
+}
+.scroll-line {
+  width: 1px; height: 60px; background: var(--gold);
+  animation: scrollPulse 2s infinite; transform-origin: top;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { scaleY: 1; opacity: 1; }
+  50% { scaleY: 0.3; opacity: 0.3; }
+}
+
+/* ── MARQUEE ── */
+.marquee-section {
+  padding: 24px 0;
+  border-top: 1px solid rgba(200,165,92,0.15);
+  border-bottom: 1px solid rgba(200,165,92,0.15);
+  overflow: hidden;
+}
+.marquee-track {
+  display: flex; gap: 60px; animation: marquee 25s linear infinite; width: max-content;
+}
+.marquee-track span {
+  font-size: 13px; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--text-secondary); white-space: nowrap;
+}
+.marquee-track span::before {
+  content: '◆'; margin-right: 60px; color: var(--gold); font-size: 8px; vertical-align: middle;
+}
+@keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+/* ── SECTIONS ── */
+section { padding: 140px 48px; position: relative; }
+
+.section-label {
+  font-size: 11px; letter-spacing: 0.35em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 48px; display: flex; align-items: center; gap: 20px;
+}
+.section-label::before { content: ''; width: 40px; height: 1px; background: var(--gold); }
+
+.section-heading {
+  font-family: 'Instrument Serif', serif; font-size: clamp(36px, 5vw, 64px);
+  font-weight: 400; line-height: 1.1; margin-bottom: 40px;
+}
+
+/* ── ABOUT ── */
+.about-layout {
+  display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 100px; align-items: start;
+}
+.about-text p { font-size: 17px; line-height: 1.85; color: var(--cream); font-weight: 300; }
+
+.about-stats {
+  display: flex; gap: 48px; margin-top: 48px; padding-top: 48px;
+  border-top: 1px solid rgba(200,165,92,0.15);
+}
+.stat-number {
+  font-family: 'Instrument Serif', serif; font-size: 42px;
+  color: var(--gold); line-height: 1; margin-bottom: 8px;
+}
+.stat-label { font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-secondary); }
+
+.about-quote { padding-top: 40px; }
+.about-quote blockquote {
+  font-family: 'Instrument Serif', serif; font-size: 22px; font-style: italic;
+  line-height: 1.6; color: var(--cream); padding-left: 28px; border-left: 2px solid var(--gold-dim);
+}
+.about-quote cite {
+  display: block; font-family: 'Outfit', sans-serif; font-style: normal; font-size: 13px;
+  color: var(--text-secondary); margin-top: 20px; padding-left: 28px; letter-spacing: 0.05em;
+}
+.about-quote cite strong { color: var(--gold); font-weight: 500; }
+
+/* ── PROJECTS ── */
+.projects-grid {
+  margin-top: 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
+}
+
+.project-card {
+  position: relative; overflow: hidden;
+  background: var(--charcoal); display: flex; flex-direction: column;
+  min-height: 280px; transition: background 0.5s;
+}
+.project-card:hover { background: var(--mid); }
+.project-card.tall { grid-row: span 2; min-height: 562px; }
+
+.project-blueprint {
+  position: absolute; inset: 0; overflow: hidden;
+  opacity: 0.3; transition: opacity 0.5s;
+}
+.project-card:hover .project-blueprint { opacity: 0.55; }
+
+.project-text {
+  padding: 24px 32px;
+  position: relative; z-index: 2;
+  margin-top: auto;
+  background: linear-gradient(0deg, rgba(26,26,26,0.95) 0%, rgba(26,26,26,0.7) 70%, transparent 100%);
+}
+.project-card:hover .project-text {
+  background: linear-gradient(0deg, rgba(42,42,42,0.95) 0%, rgba(42,42,42,0.7) 70%, transparent 100%);
+}
+
+.bp-line { position: absolute; background: var(--gold); }
+.bp-h { height: 1px; width: 0; animation: bpH 2s ease-out forwards; animation-play-state: paused; }
+.bp-v { width: 1px; height: 0; animation: bpV 2s ease-out forwards; animation-play-state: paused; }
+.bp-dot {
+  width: 4px; height: 4px; border-radius: 50%;
+  opacity: 0; animation: bpIn 0.4s ease-out forwards; animation-play-state: paused;
+}
+.bp-measure {
+  font-family: 'Outfit', sans-serif; font-size: 9px; letter-spacing: 0.15em;
+  color: var(--gold); background: none;
+  opacity: 0; animation: bpIn 0.4s ease-out forwards; animation-play-state: paused;
+}
+
+.project-card.animated .bp-h,
+.project-card.animated .bp-v,
+.project-card.animated .bp-dot,
+.project-card.animated .bp-measure { animation-play-state: running; }
+
+@keyframes bpH { to { width: var(--len); } }
+@keyframes bpV { to { height: var(--len); } }
+@keyframes bpIn { to { opacity: 0.6; } }
+
+.project-type {
+  font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 10px;
+}
+.project-detail {
+  font-family: 'Instrument Serif', serif; font-size: 22px; font-weight: 400;
+  line-height: 1.3; margin-bottom: 8px;
+}
+.project-meta {
+  font-size: 13px; color: var(--text-secondary);
+  display: flex; align-items: center; gap: 12px;
+}
+.project-meta .dot { width: 3px; height: 3px; background: var(--gold-dim); border-radius: 50%; }
+
+/* ── CTA ── */
+.cta-section { text-align: center; padding: 180px 48px; position: relative; }
+.cta-section::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center, rgba(200,165,92,0.06) 0%, transparent 70%);
+}
+.cta-heading {
+  font-family: 'Instrument Serif', serif; font-size: clamp(36px, 5vw, 64px);
+  font-weight: 400; line-height: 1.15; margin-bottom: 40px; position: relative;
+}
+.cta-btn {
+  display: inline-flex; align-items: center; gap: 16px; padding: 20px 48px;
+  background: var(--gold); color: var(--black); text-decoration: none;
+  font-size: 13px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
+  position: relative; overflow: hidden; transition: all 0.4s;
+}
+.cta-btn::before {
+  content: ''; position: absolute; inset: 0; background: var(--white);
+  transform: translateX(-101%); transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.cta-btn:hover::before { transform: translateX(0); }
+.cta-btn span, .cta-btn svg { position: relative; z-index: 1; }
+
+/* ── FOOTER ── */
+footer {
+  padding: 48px; border-top: 1px solid rgba(200,165,92,0.15);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.footer-left { display: flex; align-items: center; gap: 32px; }
+.footer-left .logo { font-size: 20px; }
+.footer-left p { font-size: 13px; color: var(--text-secondary); }
+.footer-right { display: flex; align-items: center; gap: 32px; }
+.footer-right a { color: var(--cream); text-decoration: none; font-size: 13px; transition: color 0.3s; }
+.footer-right a:hover { color: var(--gold); }
+.footer-copy { font-size: 12px; color: var(--text-secondary); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+.reveal { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 900px) {
+  nav { padding: 20px 24px; }
+  section { padding: 80px 24px; }
+  .hero { padding: 0 24px 60px; }
+  .about-layout { grid-template-columns: 1fr; gap: 60px; }
+  .projects-grid { grid-template-columns: 1fr; }
+  .project-card { min-height: 220px; }
+  .project-card.tall { min-height: 220px; grid-row: span 1; }
+  footer { flex-direction: column; gap: 24px; align-items: flex-start; }
+  .footer-left, .footer-right { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .cursor-dot, .cursor-ring { display: none; }
+  .nav-links { gap: 20px; }
+  .nav-links a { font-size: 11px; }
+  .cta-section { padding: 120px 24px; }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <a href="#" class="logo">Dev <span>Builders</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg">
+    <div class="hero-grain"></div>
+    <div class="hero-line"></div>
+    <div class="hero-line"></div>
+    <div class="hero-line"></div>
+  </div>
+  <div class="hero-content">
+    <h1>Homes built with <em>care.</em></h1>
+    <p class="hero-sub">Renovations, remodels, and additions.</p>
+  </div>
+  <div class="scroll-indicator">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<div class="marquee-section">
+  <div class="marquee-track">
+    <span>New Home Construction</span><span>Kitchen & Bath Remodels</span>
+    <span>Full Home Renovations</span><span>Room Additions</span><span>ADUs & In-Law Units</span>
+    <span>New Home Construction</span><span>Kitchen & Bath Remodels</span>
+    <span>Full Home Renovations</span><span>Room Additions</span><span>ADUs & In-Law Units</span>
+  </div>
+</div>
+
+<section id="about">
+  <div class="about-layout">
+    <div class="about-text reveal">
+      <div class="section-label">About</div>
+      <h2 class="section-heading">Sukhdev Singh</h2>
+      <p>Sukhdev is a licensed general contractor with over a decade in residential construction — working with families, solving problems on-site, and building a team that shares his standards. Every project we deliver is one we're proud to put our name on.</p>
+      <div class="about-stats">
+        <div><div class="stat-number">10+</div><div class="stat-label">Years</div></div>
+        <div><div class="stat-number">Bay Area</div><div class="stat-label">Based</div></div>
+      </div>
+    </div>
+    <div class="about-quote reveal">
+      <blockquote>Sukhdev walked us through every step and nothing fell through the cracks. You could tell he actually cared how it turned out.</blockquote>
+      <cite><strong>The Patel Family</strong> — Santa Rosa, CA</cite>
+      <blockquote style="margin-top: 40px;">He's the first call when something needs figuring out and the last person to leave the job site.</blockquote>
+      <cite><strong>David & Lisa M.</strong> — Fremont, CA</cite>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="reveal">
+    <div class="section-label">Portfolio</div>
+    <h2 class="section-heading">Our Work</h2>
+  </div>
+  <div class="projects-grid">
+    <div class="project-card tall reveal" data-bp="kitchen">
+      <div class="project-blueprint"></div>
+      <div class="project-text">
+        <span class="project-type">Kitchen & Bath Remodel</span>
+        <div class="project-detail">Full gut renovation with open-concept layout</div>
+        <div class="project-meta"><span>Santa Rosa</span><span class="dot"></span><span>1,400 sq ft</span></div>
+      </div>
+    </div>
+    <div class="project-card reveal" data-bp="newbuild">
+      <div class="project-blueprint"></div>
+      <div class="project-text">
+        <span class="project-type">New Construction</span>
+        <div class="project-detail">Single-family home, four bedrooms</div>
+        <div class="project-meta"><span>Santa Rosa</span><span class="dot"></span><span>3,200 sq ft</span></div>
+      </div>
+    </div>
+    <div class="project-card reveal" data-bp="addition">
+      <div class="project-blueprint"></div>
+      <div class="project-text">
+        <span class="project-type">Room Addition</span>
+        <div class="project-detail">Master suite and extended living area</div>
+        <div class="project-meta"><span>Fremont</span><span class="dot"></span><span>520 sq ft</span></div>
+      </div>
+    </div>
+    <div class="project-card reveal" data-bp="reno">
+      <div class="project-blueprint"></div>
+      <div class="project-text">
+        <span class="project-type">Full Renovation</span>
+        <div class="project-detail">Three-bedroom interior remodel with structural updates</div>
+        <div class="project-meta"><span>Union City</span><span class="dot"></span><span>1,850 sq ft</span></div>
+      </div>
+    </div>
+    <div class="project-card reveal" data-bp="adu">
+      <div class="project-blueprint"></div>
+      <div class="project-text">
+        <span class="project-type">ADU</span>
+        <div class="project-detail">Detached in-law unit with full kitchen and bath</div>
+        <div class="project-meta"><span>Hayward</span><span class="dot"></span><span>640 sq ft</span></div>
+      </div>
+    </div>
+    <div class="project-card tall reveal" data-bp="house">
+      <div class="project-blueprint"></div>
+      <div class="project-text">
+        <span class="project-type">New Construction</span>
+        <div class="project-detail">Two-story family home with attached garage</div>
+        <div class="project-meta"><span>Fremont</span><span class="dot"></span><span>2,800 sq ft</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="cta-section">
+  <h2 class="cta-heading reveal">Have a project?<br>We'd love to hear about it.</h2>
+  <a href="tel:+15104616152" class="cta-btn reveal" id="ctaBtn" onclick="revealPhone(event)">
+    <span id="ctaText">Get in Touch</span>
+    <svg id="ctaArrow" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 12L12 4M12 4H5M12 4V11" stroke="currentColor" stroke-width="1.5"/></svg>
+  </a>
+</section>
+
+<footer>
+  <div class="footer-left">
+    <a href="#" class="logo">Dev <span>Builders</span></a>
+    <p>General Contractor · Fremont, CA · Serving the Bay Area</p>
+  </div>
+  <div class="footer-right">
+    <span class="footer-copy">© 2026 Dev Builders</span>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+const dot = document.getElementById('cursorDot');
+const ring = document.getElementById('cursorRing');
+let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+
+document.addEventListener('mousemove', e => {
+  mouseX = e.clientX; mouseY = e.clientY;
+  dot.style.left = mouseX + 'px'; dot.style.top = mouseY + 'px';
+});
+function animateRing() {
+  ringX += (mouseX - ringX) * 0.15; ringY += (mouseY - ringY) * 0.15;
+  ring.style.left = ringX + 'px'; ring.style.top = ringY + 'px';
+  requestAnimationFrame(animateRing);
+}
+animateRing();
+
+document.querySelectorAll('a, .cta-btn').forEach(el => {
+  el.addEventListener('mouseenter', () => ring.classList.add('hover'));
+  el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
+});
+
+// ── Phone Reveal ──
+let phoneRevealed = false;
+function revealPhone(e) {
+  if (!phoneRevealed) {
+    e.preventDefault();
+    const text = document.getElementById('ctaText');
+    const arrow = document.getElementById('ctaArrow');
+    text.style.transition = 'opacity 0.3s';
+    text.style.opacity = '0';
+    arrow.style.transition = 'opacity 0.3s';
+    arrow.style.opacity = '0';
+    setTimeout(() => {
+      text.innerHTML = '&#9742; Call (510) 461-6152';
+      arrow.style.display = 'none';
+      text.style.opacity = '1';
+      phoneRevealed = true;
+    }, 300);
+  }
+}
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 120);
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+document.querySelectorAll('.nav-links a').forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    document.querySelector(link.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+window.addEventListener('scroll', () => {
+  const s = window.scrollY, h = document.querySelector('.hero-content');
+  const nav = document.querySelector('nav');
+  if (s < window.innerHeight) { h.style.transform = `translateY(${s*0.3}px)`; h.style.opacity = 1-(s/window.innerHeight)*0.8; }
+  if (s > 80) { nav.classList.add('scrolled'); } else { nav.classList.remove('scrolled'); }
+});
+
+// ── Blueprints ──
+const BP = {
+  kitchen: [
+    {c:'bp-h',t:'18%',l:'8%',len:'55%',d:.3},{c:'bp-h',t:'65%',l:'8%',len:'55%',d:.5},
+    {c:'bp-v',t:'18%',l:'8%',len:'47%',d:.2},{c:'bp-v',t:'18%',l:'63%',len:'47%',d:.4},
+    {c:'bp-v',t:'18%',l:'38%',len:'28%',d:.6},{c:'bp-h',t:'46%',l:'38%',len:'25%',d:.8},
+    {c:'bp-h',t:'33%',l:'12%',len:'22%',d:1},
+    {c:'bp-dot',t:'18%',l:'8%',d:.5},{c:'bp-dot',t:'18%',l:'63%',d:.7},
+    {c:'bp-dot',t:'65%',l:'8%',d:.8},{c:'bp-dot',t:'65%',l:'63%',d:.9},
+    {c:'bp-dot',t:'46%',l:'38%',d:1},{c:'bp-measure',t:'13%',l:'28%',txt:"24'-0\"",d:1.2},
+    {c:'bp-measure',t:'40%',l:'2%',txt:"18'-6\"",d:1.4},
+  ],
+  newbuild: [
+    {c:'bp-h',t:'22%',l:'12%',len:'58%',d:.2},{c:'bp-h',t:'68%',l:'12%',len:'58%',d:.4},
+    {c:'bp-v',t:'22%',l:'12%',len:'46%',d:.3},{c:'bp-v',t:'22%',l:'70%',len:'46%',d:.5},
+    {c:'bp-h',t:'45%',l:'12%',len:'58%',d:.7},{c:'bp-v',t:'22%',l:'42%',len:'23%',d:.6},
+    {c:'bp-dot',t:'22%',l:'42%',d:.7},{c:'bp-dot',t:'45%',l:'42%',d:.8},
+    {c:'bp-dot',t:'22%',l:'12%',d:.5},{c:'bp-dot',t:'22%',l:'70%',d:.6},
+    {c:'bp-measure',t:'17%',l:'34%',txt:"32'-0\"",d:1},
+  ],
+  addition: [
+    {c:'bp-h',t:'25%',l:'15%',len:'40%',d:.3},{c:'bp-h',t:'65%',l:'15%',len:'40%',d:.5},
+    {c:'bp-v',t:'25%',l:'15%',len:'40%',d:.2},{c:'bp-v',t:'25%',l:'55%',len:'40%',d:.4},
+    {c:'bp-h',t:'25%',l:'55%',len:'25%',d:.7},{c:'bp-h',t:'52%',l:'55%',len:'25%',d:.9},
+    {c:'bp-v',t:'25%',l:'80%',len:'27%',d:.8},
+    {c:'bp-dot',t:'25%',l:'55%',d:.6},{c:'bp-dot',t:'25%',l:'80%',d:.9},{c:'bp-dot',t:'52%',l:'80%',d:1},
+    {c:'bp-measure',t:'20%',l:'62%',txt:"12'-6\"",d:1.1},
+    {c:'bp-measure',t:'20%',l:'28%',txt:"EXISTING",d:1.3},
+    {c:'bp-measure',t:'56%',l:'63%',txt:"ADDITION",d:1.4},
+  ],
+  reno: [
+    {c:'bp-h',t:'20%',l:'10%',len:'65%',d:.2},{c:'bp-h',t:'72%',l:'10%',len:'65%',d:.4},
+    {c:'bp-v',t:'20%',l:'10%',len:'52%',d:.3},{c:'bp-v',t:'20%',l:'75%',len:'52%',d:.5},
+    {c:'bp-v',t:'20%',l:'42%',len:'52%',d:.6},{c:'bp-h',t:'48%',l:'10%',len:'32%',d:.8},
+    {c:'bp-h',t:'48%',l:'42%',len:'33%',d:.9},{c:'bp-v',t:'48%',l:'58%',len:'24%',d:1},
+    {c:'bp-dot',t:'20%',l:'42%',d:.7},{c:'bp-dot',t:'72%',l:'42%',d:.8},{c:'bp-dot',t:'48%',l:'58%',d:1},
+    {c:'bp-measure',t:'15%',l:'35%',txt:"48'-0\"",d:1.1},
+  ],
+  adu: [
+    {c:'bp-h',t:'25%',l:'22%',len:'42%',d:.3},{c:'bp-h',t:'66%',l:'22%',len:'42%',d:.5},
+    {c:'bp-v',t:'25%',l:'22%',len:'41%',d:.2},{c:'bp-v',t:'25%',l:'64%',len:'41%',d:.4},
+    {c:'bp-v',t:'25%',l:'46%',len:'41%',d:.6},{c:'bp-h',t:'45%',l:'22%',len:'24%',d:.8},
+    {c:'bp-dot',t:'25%',l:'22%',d:.5},{c:'bp-dot',t:'25%',l:'64%',d:.6},
+    {c:'bp-dot',t:'66%',l:'22%',d:.7},{c:'bp-dot',t:'66%',l:'64%',d:.8},
+    {c:'bp-measure',t:'20%',l:'38%',txt:"20'-0\"",d:1},
+    {c:'bp-measure',t:'44%',l:'15%',txt:"16'-0\"",d:1.2},
+  ],
+  house: [
+    {c:'bp-h',t:'12%',l:'8%',len:'68%',d:.2},{c:'bp-h',t:'82%',l:'8%',len:'68%',d:.4},
+    {c:'bp-v',t:'12%',l:'8%',len:'70%',d:.3},{c:'bp-v',t:'12%',l:'76%',len:'70%',d:.5},
+    {c:'bp-h',t:'45%',l:'8%',len:'68%',d:.6},{c:'bp-v',t:'12%',l:'38%',len:'33%',d:.7},
+    {c:'bp-v',t:'45%',l:'52%',len:'37%',d:.8},{c:'bp-h',t:'62%',l:'8%',len:'44%',d:.9},
+    {c:'bp-h',t:'28%',l:'38%',len:'38%',d:1},
+    {c:'bp-dot',t:'12%',l:'38%',d:.8},{c:'bp-dot',t:'45%',l:'38%',d:.9},
+    {c:'bp-dot',t:'45%',l:'52%',d:1},{c:'bp-dot',t:'82%',l:'52%',d:1.1},
+    {c:'bp-measure',t:'7%',l:'32%',txt:"56'-0\"",d:1.2},
+    {c:'bp-measure',t:'42%',l:'56%',txt:"28'-0\"",d:1.4},
+    {c:'bp-measure',t:'52%',l:'2%',txt:"1ST FLOOR",d:1.5},
+    {c:'bp-measure',t:'18%',l:'2%',txt:"2ND FLOOR",d:1.6},
+  ]
+};
+
+document.querySelectorAll('.project-card[data-bp]').forEach(card => {
+  const layout = BP[card.dataset.bp];
+  const container = card.querySelector('.project-blueprint');
+  if (!layout || !container) return;
+
+  layout.forEach(item => {
+    const el = document.createElement('div');
+    if (item.c === 'bp-dot') {
+      el.className = 'bp-line bp-dot';
+    } else if (item.c === 'bp-measure') {
+      el.className = 'bp-line bp-measure';
+      el.textContent = item.txt;
+    } else {
+      el.className = `bp-line ${item.c}`;
+      el.style.setProperty('--len', item.len);
+    }
+    el.style.top = item.t;
+    el.style.left = item.l;
+    el.style.animationDelay = item.d + 's';
+    container.appendChild(el);
+  });
+});
+
+const bpObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('animated'); });
+}, { threshold: 0.2 });
+document.querySelectorAll('.project-card').forEach(c => bpObs.observe(c));
+</script>
+</body>
+</html>
